@@ -1,35 +1,36 @@
 from collections import namedtuple
 import multiprocessing as mp
-from time import sleep, time
+import requests
+from time import time
 
-SCRAPPER = namedtuple('Scraper', 'name delay')
 
+HOST = 'http://127.0.0.1:9000'
+SCRAPPER = namedtuple('Scraper', 'name url')
 SCRAPPERS = [
     # minimarkets
-    SCRAPPER('dixy', 0.25),        # 0
-    SCRAPPER('pyaterochka', 0.5),  # 1
-    SCRAPPER('magnit', 1),         # 2
+    SCRAPPER('Dixy', HOST + '/dixy'),
+    SCRAPPER('Pyaterochka', HOST + '/pyaterochka'),
+    SCRAPPER('Magnit', HOST + '/magnit'),
     # markets
-    SCRAPPER('okey', 1.25),        # 3
-    SCRAPPER('spar', 1.5),         # 4
-    SCRAPPER('billa', 2),          # 5
+    SCRAPPER('Okey', HOST + '/okey'),
+    SCRAPPER('Spar', HOST + '/spar'),
+    SCRAPPER('Billa', HOST + '/billa'),
     # supermarkets
-    SCRAPPER('perekrestok', 2.25), # 6
-    SCRAPPER('lenta', 2.5),        # 7
-    SCRAPPER('karusel', 3),        # 8
+    SCRAPPER('Perekrestok', HOST + '/perekrestok'),
+    SCRAPPER('Lenta', HOST + '/lenta'),
+    SCRAPPER('Karusel', HOST + '/karusel'),
     # hypermarkets
-    SCRAPPER('globus', 3.25),      # 9
-    SCRAPPER('auchan', 3.5),       # 10
-    SCRAPPER('metro', 4)           # 11
+    SCRAPPER('Globus', HOST + '/globus'),
+    SCRAPPER('Auchan', HOST + '/auchan'),
+    SCRAPPER('Metro', HOST + '/metro')
 ]
-
-CPU_CORE_COUNTS = 4
 
 
 def launch_scoop(scrappers):
     for scrapper in scrappers:
         print(f'{scrapper.name} scrapper is launched...')
-        sleep(scrapper.delay)
+        response = requests.get(scrapper.url)
+        _ = response.content
         print(f'{scrapper.name} scrapper is over!')
 
 
