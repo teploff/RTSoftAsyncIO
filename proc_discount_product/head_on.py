@@ -35,7 +35,7 @@ def launch_scoop(scrappers):
 
 if __name__ == '__main__':
 
-    process = [mp.Process(target=launch_scoop, args=(SCRAPPERS[core * 3: core * 3 + 3],))
+    process = [mp.Process(target=launch_scoop, args=(SCRAPPERS[core * 3: core * 3 + 3], ))
                for core in range(CPU_CORE_COUNTS)]
 
     start_time = time()
